@@ -99,6 +99,44 @@ controller.hears(["!weatherinfo"],["ambient", "direct_message"],function(bot,mes
 	
 });
 
+// !raffle : takes in a list of names, and random selects a winner
+controller.hears(["!raffle"],["ambient", "direct_message"],function(bot,message){
+	
+	var names = [];
+	bot.startConversation(message, function(err, convo) {
+		convo.ask("Add name, or type 'DONE' to exit.",[
+		{
+			pattern: 'DONE',
+			callback: function(response, convo) {
+				convo.say("Done with "+names.length+ " entries.");
+				convo.next();
+			}
+		},
+		{
+			default: true,
+			callback: function(response, convo){
+				names.push(reponse.text);
+				convo.repeat();
+				convo.next();
+			}
+		}
+		]
+			
+		
+		);
+		
+		
+	}
+	if(names.length == 0) {
+		bot.reply(message, "We can't select from an empty set!  Add some entries next time!");
+		return;
+	}
+	bot.reply(message, "The winner is... " + names[Math.floor(names.length * Math.random()));
+	
+	
+	
+});
+
 // !rawweatherdata : gives full json data of weather information, dm only
 controller.hears(["!rawweatherdata"],["direct_message"],function(bot,message){
 	
