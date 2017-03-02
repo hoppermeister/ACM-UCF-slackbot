@@ -120,20 +120,13 @@ controller.hears(["!raffle"],["ambient", "direct_message"],function(bot,message)
 				convo.next();
 			}
 		}
-		]
-			
-		
-		);
-		
-		
+		]);
 	}
 	if(names.length == 0) {
 		bot.reply(message, "We can't select from an empty set!  Add some entries next time!");
 		return;
 	}
 	bot.reply(message, "The winner is... " + names[Math.floor(names.length * Math.random()));
-	
-	
 	
 });
 
